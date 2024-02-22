@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="card mb-4">
+    <div class="card-header text-center">
+      Login
+      <div class="card-body">
+        <form #LoginForm="ngForm" (ngSubmit)="login()" [formGroup]="_FormGroup">
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="email">Email</label>
+            <div class="col-md-8">
+              <input
+                class="form-control"
+                id="email"
+                type="email"
+                placeholder="Email"
+                formControlName="email"
+                name="email"
+                [ngClass]="{
+                  'is-invalid':
+                    (email?.touched || email?.dirty) && email?.invalid
+                }"
+              />
+
+              <span class="invalid-feedback">
+                @if(email?.errors?.['required']){
+                <span>Email is required</span>
+                } @if(email?.errors?.['minlength']){
+                <span>Email at least 5 chars</span>
+                }
+              </span>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="password"
+              >Password</label
+            >
+            <div class="col-md-8">
+              <input
+                class="form-control"
+                formControlName="password"
+                id="password"
+                type="password"
+                placeholder="Password"
+                name="password"
+                [ngClass]="{
+                  'is-invalid':
+                    (password?.touched || password?.dirty) && password?.invalid
+                }"
+              />
+              <span class="invalid-feedback">
+                @if(password?.errors?.['required']){
+                <span>Password is required</span>
+                } @if(password?.errors?.['minlength']){
+                <span>Password at least 5 chars</span>
+                }
+              </span>
+            </div>
+          </div>
+
+          <button
+            [disabled]="!LoginForm.valid"
+            type="submit"
+            class="btn btn-success"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

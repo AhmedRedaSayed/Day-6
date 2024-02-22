@@ -1,0 +1,158 @@
+<div class="container">
+  <div class="card mb-4">
+    <div class="card-header">
+      Register/div>
+      <div class="card-body">
+        <form
+          #RegisterForm="ngForm"
+          (ngSubmit)="signUp()"
+          [formGroup]="_FormGroup"
+        >
+          <div class="form-group row mb-2">
+            <label for="fullName" class="col-md-2 col-form-label"
+              >Full Name</label
+            >
+            <div class="col-md-8">
+              <input
+                type="text"
+                name="fullName"
+                class="form-control"
+                id="fullName"
+                formControlName="fullName"
+                placeholder="Full Name"
+                [ngClass]="{
+                  'is-invalid':
+                    (fullName?.touched || fullName?.dirty) && fullName?.invalid
+                }"
+              />
+
+              <span class="invalid-feedback">
+                @if(fullName?.errors?.['required']){
+                <span>Full Name is required</span>
+                } @if(fullName?.errors?.['minlength']){
+                <span>Full Name at least 5 chars</span>
+                }
+              </span>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="emailId">Email</label>
+            <div class="col-md-8">
+              <input
+                class="form-control"
+                id="emailId"
+                type="email"
+                formControlName="email"
+                placeholder="Email"
+                required
+                email
+                name="email"
+                [ngClass]="{
+                  'is-invalid':
+                    (email?.touched || email?.dirty) && email?.invalid
+                }"
+              />
+
+              <span class="invalid-feedback">
+                @if(email?.errors?.['required']){
+                <span>Email is required</span>
+                } @if(email?.errors?.['minlength']){
+                <span>Email at least 5 chars</span>
+                }
+              </span>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label" for="password"
+              >Password</label
+            >
+            <div class="col-md-8">
+              <input
+                class="form-control"
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="Password"
+                name="password"
+                [ngClass]="{
+                  'is-invalid':
+                    (password?.touched || password?.dirty) && password?.invalid
+                }"
+              />
+              <span class="invalid-feedback">
+                @if(password?.errors?.['required']){
+                <span>Password is required</span>
+                } @if(password?.errors?.['minlength']){
+                <span>Password at least 5 chars</span>
+                }
+              </span>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label">Address</label>
+            <div formArrayName="address">
+              @for(control of address.controls;track $index){
+              <div [formGroupName]="$index">
+                city:
+                <input type="text" formControlName="city" />
+                street:
+                <input type="text" formControlName="street" />
+                PostalCode:
+                <input type="number" formControlName="postalCode" />
+                @if(address.controls.length !== 1) {
+
+                <button
+                type="button"
+                  (click)="removeAddressInput($index)"
+                  class="btn btn-danger"
+                >
+                  Remove
+                </button>
+                }
+              </div>
+
+              }
+              <button   type="button" (click)="addNewAddress()" class="btn btn-primary w-25">
+                add address
+              </button>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-md-2 col-form-label">Phone Number</label>
+            <div formArrayName="phoneNumber">
+              @for(control of phoneNumber.controls;track $index){
+              <div [formGroupName]="$index">
+                Phone:
+                <input type="tel" formControlName="phoneNumber" />
+                @if(phoneNumber.controls.length !== 1) {
+
+                <button type="button"
+                  (click)="removePhoneNumberInput($index)"
+                  class="btn btn-danger"
+                >
+                  Remove
+                </button>
+                }
+              </div>
+
+              }
+            </div>
+            <button type="button" (click)="addNewPhoneNumber()" class="btn btn-primary w-25">
+              add phone Number
+            </button>
+          </div>
+
+          <button
+            [disabled]="!RegisterForm.valid"
+            type="submit"
+            class="btn btn-success"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+</div>
