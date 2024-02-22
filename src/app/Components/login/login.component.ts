@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -42,25 +42,52 @@ export class LoginComponent {
   get password() {
     return this._FormGroup.get('password');
   }
-  user:any ;
+  user: any[] = [];
 
+  // login() {
+  //   if (this.email && this.password) {
+  //     this._userService.getUser().subscribe({
+  //       next: (data: any) => {
+  //         this.user = data;
+  //       },
+  //     });
+  //     let isExistingUser = this.user.find(
+  //       (existing: any) => existing.email === this.email?.value
+  //     );
+  //     console.log(isExistingUser);
+
+  // }
+  // }
   login() {
     if (this.email && this.password) {
+      this._userService.getUser().subscribe({
+        next: (data: any) => {
+          this.user = data;
+          let isExistingUser = this.user.find(
+            (existing: any) => existing.email === this.email?.value
+          );
+          console.log(isExistingUser);
+          if (isExistingUser) {
+            if (
+              isExistingUser.email === this.email?.value &&
+              isExistingUser.password === this.password?.value
+            ) {
+              let loginUser = {
+                email: isExistingUser.email,
+                password: isExistingUser.password,
+              };
 
-      this.user = {
-        email: this.email.value,
-        password: this.password.value
-      };
-
-
-      this._userService.login(this.user).subscribe({
-        next: () => {
-          this.router.navigate(['/products'])
-        }
-
+              this._userService.login(loginUser).subscribe({
+                next: () => {
+                  this.router.navigate(['/products']);
+                },
+              });
+            }
+          } else {
+            alert('invalid email or password');
+          }
+        },
       });
     }
   }
-
-
 }

@@ -19,6 +19,10 @@ export class UserService {
   register(user: Iuser): Observable<Iuser> {
     return this._HttpClient.post<Iuser>(`http://localhost:3000/users`, user);
   }
+  getUser():Observable<any>
+  {
+    return this._HttpClient.get<any>(`http://localhost:3000/users`)
+  }
   login(user: any): Observable<any> {
     let backendToken:string=user.email
    localStorage.setItem('userToken',backendToken)
