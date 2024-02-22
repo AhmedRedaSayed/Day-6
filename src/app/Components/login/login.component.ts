@@ -44,20 +44,6 @@ export class LoginComponent {
   }
   user: any[] = [];
 
-  // login() {
-  //   if (this.email && this.password) {
-  //     this._userService.getUser().subscribe({
-  //       next: (data: any) => {
-  //         this.user = data;
-  //       },
-  //     });
-  //     let isExistingUser = this.user.find(
-  //       (existing: any) => existing.email === this.email?.value
-  //     );
-  //     console.log(isExistingUser);
-
-  // }
-  // }
   login() {
     if (this.email && this.password) {
       this._userService.getUser().subscribe({
